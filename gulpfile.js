@@ -60,7 +60,7 @@ function html() {
         basepath: "@file",
       })
     )
-    .pipe(gulp.dest("dist"));
+    .pipe(gulp.dest("docs"));
 }
 function htmlFormat() {
   return gulp
@@ -72,17 +72,17 @@ function htmlFormat() {
       })
     )
     .pipe(prettier({ singleQuote: true }))
-    .pipe(gulp.dest("dist"));
+    .pipe(gulp.dest("docs"));
 }
 
 function js() {
-  return gulp.src("src/js/**/*.js").pipe(gulp.dest("dist/js"));
+  return gulp.src("src/js/**/*.js").pipe(gulp.dest("docs/js"));
 }
 
 function minimizeFolder(folder) {
   (async () => {
     await imagemin([`${folder}/*.svg`], {
-      destination: `dist/${folder.substring(4)}`,
+      destination: `docs/${folder.substring(4)}`,
       plugins: [
         imageminSvgo({
           plugins: [
@@ -98,28 +98,28 @@ function minimizeFolder(folder) {
 
   (async () => {
     await imagemin([`${folder}/*.{jpg,jpeg}`], {
-      destination: `dist/${folder.substring(4)}`,
+      destination: `docs/${folder.substring(4)}`,
       plugins: [imageminJpegtran()],
     });
   })();
 
   (async () => {
     await imagemin([`${folder}/*.png`], {
-      destination: `dist/${folder.substring(4)}`,
+      destination: `docs/${folder.substring(4)}`,
       plugins: [imageminPngquant()],
     });
   })();
 
   (async () => {
     await imagemin([`${folder}/*.gif`], {
-      destination: `dist/${folder.substring(4)}`,
+      destination: `docs/${folder.substring(4)}`,
       plugins: [imageminGIF()],
     });
   })();
 
   // (async () => {
   //   await imagemin([`${folder}/*.{jpg,jpeg,png}`], {
-  //     destination: `dist/${folder.substring(4)}`,
+  //     destination: `docs/${folder.substring(4)}`,
   //     plugins: [imageminWebp({ quality: 50 })],
   //   });
 
@@ -138,25 +138,25 @@ function imagesWithMinifier(done) {
 }
 
 function images() {
-  return gulp.src("src/images/**/*").pipe(gulp.dest("dist/images"));
+  return gulp.src("src/images/**/*").pipe(gulp.dest("docs/images"));
 }
 
 function fonts() {
   return gulp
     .src("src/fonts/*.+(ttf|otf|eof|svg|woff|woff2)")
-    .pipe(gulp.dest("dist/fonts"));
+    .pipe(gulp.dest("docs/fonts"));
 }
 
 function css() {
-  return gulp.src("src/css/**/*.css").pipe(gulp.dest("dist/css"));
+  return gulp.src("src/css/**/*.css").pipe(gulp.dest("docs/css"));
 }
 
 function scssFileMove() {
-  return gulp.src("src/scss/**/*.scss").pipe(gulp.dest("dist/scss"));
+  return gulp.src("src/scss/**/*.scss").pipe(gulp.dest("docs/scss"));
 }
 
 function Lottie() {
-  return gulp.src("src/js/lottie/**.json").pipe(gulp.dest("dist/js/lottie"));
+  return gulp.src("src/js/lottie/**.json").pipe(gulp.dest("docs/js/lottie"));
 }
 
 function scss() {
@@ -172,16 +172,16 @@ function scss() {
     .pipe(csso())
     .pipe(concat("style.css"))
     .pipe(sourcemaps.write("."))
-    .pipe(gulp.dest("dist/css"));
+    .pipe(gulp.dest("docs/css"));
 }
 
 function Clear() {
-  return del("dist");
+  return del("docs");
 }
 
 function Serve() {
   browserSync.init({
-    server: "./dist",
+    server: "./docs",
     // uncomment if you don't have internet connection
     // online: false
   });
